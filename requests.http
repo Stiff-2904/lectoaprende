@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:3000
+@sessionId = PEGA_AQUI_EL_SESSION_ID
+
+### Health
+GET {{baseUrl}}/api/health
+
+### Listar módulos
+GET {{baseUrl}}/api/modules
+
+### Obtener módulo 1
+GET {{baseUrl}}/api/modules/1
+
+### Ejercicios del módulo 1
+GET {{baseUrl}}/api/modules/1/exercises
+
+### Crear sesión anónima
+POST {{baseUrl}}/api/sessions
+Content-Type: application/json
+
+### Responder módulo 1
+POST {{baseUrl}}/api/sessions/{{sessionId}}/attempts
+Content-Type: application/json
+
+{
+  "moduleId": 1,
+  "exerciseId": "m1-e1",
+  "answer": "M"
+}
+
+### Responder módulo 2 incorrectamente
+POST {{baseUrl}}/api/sessions/{{sessionId}}/attempts
+Content-Type: application/json
+
+{
+  "moduleId": 2,
+  "exerciseId": "m2-e1",
+  "answer": "d"
+}
+
+### Responder módulo 3
+POST {{baseUrl}}/api/sessions/{{sessionId}}/attempts
+Content-Type: application/json
+
+{
+  "moduleId": 3,
+  "exerciseId": "m3-e1",
+  "answer": "A"
+}
+
+### Responder módulo 4
+POST {{baseUrl}}/api/sessions/{{sessionId}}/attempts
+Content-Type: application/json
+
+{
+  "moduleId": 4,
+  "exerciseId": "m4-e1",
+  "answer": ["ME", "SA"]
+}
+
+### Ver progreso
+GET {{baseUrl}}/api/sessions/{{sessionId}}/progress
+
+### Ver resumen para adulto
+GET {{baseUrl}}/api/sessions/{{sessionId}}/adult-summary
+
+### Eliminar sesión
+DELETE {{baseUrl}}/api/sessions/{{sessionId}}
