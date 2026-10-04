@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LectoAprende - Plataforma de Refuerzo Educativo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for kids friendly icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        skyBlue: '#4DAFEA',
+                        softYellow: '#FFD966',
+                        mintGreen: '#75D6B1',
+                        softCoral: '#FF8A80',
+                        darkBlue: '#294C60',
+                        lightBg: '#F0F9FF'
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #E0F2FE;
+            color: #294C60;
+            user-select: none;
+        }
+        h1, h2, h3, .font-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        /* Custom floating animation for Lito */
+        @keyframes floatLito {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: floatLito 3s ease-in-out infinite;
+        }
+        /* Bounce effect for buttons */
+        .btn-kids {
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-kids:hover {
+            transform: scale(1.05);
+        }
+        .btn-kids:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between p-3 sm:p-6 bg-gradient-to-b from-sky-100 to-sky-300">
+
+    <!-- Navbar / Global Header -->
+    <header class="w-full max-w-5xl flex items-center justify-between bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl shadow-lg border-2 border-sky-300 mb-4">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="showScreen('welcome-screen')">
+            <div class="w-10 h-10 rounded-full bg-softCoral flex items-center justify-center text-white text-xl shadow-md">
+                <i class="fa-solid fa-feather"></i>
+            </div>
+            <span class="font-title text-2xl sm:text-3xl font-bold tracking-wide text-skyBlue drop-shadow-sm">
+                Lecto<span class="text-softCoral">Aprende</span>
+            </span>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button onclick="toggleAudio()" id="audio-btn" class="bg-sky-100 hover:bg-sky-200 text-darkBlue px-3 py-2 rounded-xl font-bold text-sm flex items-center space-x-1 shadow-sm transition btn-title" title="Activar/Desactivar sonido">
+                <i class="fa-solid fa-volume-high text-skyBlue text-lg"></i>
+                <span class="hidden sm:inline">Audio</span>
+            </button>
+            <button onclick="showScreen('menu-screen')" class="bg-skyBlue hover:bg-sky-400 text-white px-4 py-2 rounded-xl font-title font-bold text-base shadow-md transition btn-kids flex items-center space-x-1">
+                <i class="fa-solid fa-house"></i>
+                <span>INICIO</span>
+            </button>
+            <button onclick="showScreen('adult-screen')" class="bg-darkBlue hover:bg-opacity-90 text-white px-3 py-2 rounded-xl font-bold text-sm shadow-md transition btn-kids" title="Área para Adultos">
+                <i class="fa-solid fa-user-shield"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main id="app-container" class="w-full max-w-5xl flex-1 flex flex-col justify-center items-center relative">
+
+        <!-- ================= 1. PANTALLA DE BIENVENIDA ================= -->
+        <section id="welcome-screen" class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-10 shadow-2xl border-4 border-white flex flex-col lg:flex-row items-center justify-between relative overflow-hidden">
+            <!-- Decorative background elements -->
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-softYellow/30 rounded-full blur-xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-mintGreen/30 rounded-full blur-xl pointer-events-none"></div>
+            
+            <!-- Left: Lito Character & Fun elements -->
+            <div class="flex flex-col items-center lg:w-1/2 relative z-10 mb-6 lg:mb-0">
+                <div class="animate-float relative">
+                    <!-- Lito Parrot Avatar (SVG representation matching visual) -->
+                    <div class="w-48 h-48 sm:w-60 sm:h-60 rounded-full bg-gradient-to-tr from-sky-200 to-mintGreen/40 flex items-center justify-center p-3 shadow-inner border-4 border-white">
+                        <div class="w-full h-full bg-mintGreen rounded-full flex flex-col items-center justify-center relative overflow-hidden shadow-lg border-2 border-emerald-400">
+                            <!-- Parrot Head & Beak -->
+                            <div class="absolute top-4 w-16 h-16 bg-red-500 rounded-full border-2 border-yellow-400"></div>
+                            <div class="absolute top-10 left-1/2 transform -translate-x-1/2 w-12 h-10 bg-amber-400 rounded-lg rotate-12 z-20 shadow"></div>
+                            <div class="absolute top-12 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-skyBlue rounded-full z-10"></div>
+                            <div class="absolute bottom-2 text-white font-title font-bold text-sm bg-darkBlue/70 px-3 py-1 rounded-full">¡Lito!</div>
+                        </div>
+                    </div>
+                    <!-- Floating musical notes & stars -->
+                    <span class="absolute -top-2 left-6 text-2xl animate-bounce">⭐</span>
+                    <span class="absolute top-10 -right-4 text-2xl animate-pulse">🎵</span>
+                </div>
+            </div>
+
+            <!-- Right: Welcome message & Start Button -->
+            <div class="flex flex-col items-center lg:items-start text-center lg:text-left lg:w-1/2 z-10">
+                <h1 class="text-3xl sm:text-5xl font-title font-bold text-skyBlue mb-3 drop-shadow-sm">
+                    ¡Hola! Soy <span class="text-softCoral">Lito</span>
+                </h1>
+                <p class="text-lg sm:text-2xl text-darkBlue font-semibold mb-8">
+                    Jugamos, escuchamos <br class="hidden sm:inline">y aprendemos 🎶📚
+                </p>
+                <button onclick="playWelcomeSound(); showScreen('menu-screen');" class="btn-kids bg-softYellow hover:bg-yellow-400 text-darkBlue font-title font-bold text-xl sm:text-2xl px-10 py-4 rounded-3xl shadow-lg border-b-4 border-yellow-600 flex items-center space-x-3">
+                    <i class="fa-solid fa-star text-amber-500 text-2xl animate-spin"></i>
+                    <span>COMENZAR</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 2. MENÚ PRINCIPAL ================= -->
+        <section id="menu-screen" class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white hidden flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl sm:text-3xl font-title font-bold text-skyBlue flex items-center space-x-2">
+                    <i class="fa-solid fa-gamepad text-softCoral"></i>
+                    <span>¿Qué quieres practicar hoy?</span>
+                </h2>
+                <span class="bg-softYellow text-darkBlue font-title font-bold text-sm px-4 py-1.5 rounded-full shadow-sm">
+                    ¡Elige un juego! 🎯
+                </span>
+            </div>
+
+            <!-- Grid of Modules -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                <!-- Módulo 1 -->
+                <div onclick="startModule(1)" class="btn-kids bg-gradient-to-r from-sky-100 to-sky-200 hover:from-sky-200 hover:to-sky-300 border-3 border-sky-400 p-4 sm:p-5 rounded-2xl shadow-md cursor-pointer flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-skyBlue text-white font-title text-2xl font-bold rounded-xl flex items-center justify-center shadow">1</div>
+                        <div>
+                            <h3 class="font-title font-bold text-lg sm:text-xl text-darkBlue">Letras y sonidos</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">Reconoce fonemas y escucha</p>
+                        </div>
+                    </div>
+                    <div class="text-3xl bg-white p-2 rounded-xl shadow-sm">🔊</div>
+                </div>
+
+                <!-- Módulo 2 -->
+                <div onclick="startModule(2)" class="btn-kids bg-gradient-to-r from-pink-50 to-rose-100 hover:from-pink-100 hover:to-rose-200 border-3 border-rose-300 p-4 sm:p-5 rounded-2xl shadow-md cursor-pointer flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-softCoral text-white font-title text-2xl font-bold rounded-xl flex items-center justify-center shadow">2</div>
+                        <div>
+                            <h3 class="font-title font-bold text-lg sm:text-xl text-darkBlue">Letras que se parecen</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">Diferencia b/d y p/q</p>
+                        </div>
+                    </div>
+                    <div class="text-3xl bg-white p-2 rounded-xl shadow-sm font-title font-bold text-softCoral">b d</div>
+                </div>
+
+                <!-- Módulo 3 -->
+                <div onclick="startModule(3)" class="btn-kids bg-gradient-to-r from-emerald-50 to-green-100 hover:from-emerald-100 hover:to-green-200 border-3 border-mintGreen p-4 sm:p-5 rounded-2xl shadow-md cursor-pointer flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-mintGreen text-white font-title text-2xl font-bold rounded-xl flex items-center justify-center shadow">3</div>
+                        <div>
+                            <h3 class="font-title font-bold text-lg sm:text-xl text-darkBlue">Construyo sílabas</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">Une consonantes y vocales</p>
+                        </div>
+                    </div>
+                    <div class="text-2xl bg-white p-2 rounded-xl shadow-sm font-title font-bold text-emerald-600">M + A</div>
+                </div>
+
+                <!-- Módulo 4 -->
+                <div onclick="startModule(4)" class="btn-kids bg-gradient-to-r from-amber-50 to-yellow-100 hover:from-amber-100 hover:to-yellow-200 border-3 border-softYellow p-4 sm:p-5 rounded-2xl shadow-md cursor-pointer flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-softYellow text-darkBlue font-title text-2xl font-bold rounded-xl flex items-center justify-center shadow">4</div>
+                        <div>
+                            <h3 class="font-title font-bold text-lg sm:text-xl text-darkBlue">Armo y leo palabras</h3>
+                            <p class="text-xs sm:text-sm text-gray-600">Ordena sílabas y lee</p>
+                        </div>
+                    </div>
+                    <div class="text-2xl bg-white p-2 rounded-xl shadow-sm">🏠</div>
+                </div>
+            </div>
+
+            <!-- Bottom Progress & Adult quick links -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t-2 border-sky-100">
+                <button onclick="showScreen('progress-screen')" class="btn-kids w-full sm:w-auto bg-mintGreen hover:bg-emerald-500 text-white font-title font-bold text-lg px-6 py-3 rounded-2xl shadow-md flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-trophy text-yellow-200"></i>
+                    <span>MI PROGRESO</span>
+                </button>
+                <div class="text-xs sm:text-sm text-gray-500 font-semibold text-center">
+                    ✨ Universidad Nacional • Campus Coto • Proyecto LectoAprende
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. PANTALLA DE ACTIVIDAD (DINÁMICA) ================= -->
+        <section id="activity-screen" class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white hidden flex-col">
+            <!-- Header bar inside activity -->
+            <div class="flex items-center justify-between mb-4 pb-3 border-b-2 border-sky-100">
+                <div class="flex items-center space-x-3">
+                    <div id="module-badge" class="w-10 h-10 bg-skyBlue text-white font-title font-bold text-xl rounded-xl flex items-center justify-center shadow">1</div>
+                    <h3 id="activity-title" class="font-title font-bold text-xl sm:text-2xl text-darkBlue">¡Escucha con mucha atención!</h3>
+                </div>
+                <button onclick="playAudioPrompt()" class="bg-amber-100 hover:bg-amber-200 text-amber-800 px-4 py-2 rounded-xl font-bold text-sm flex items-center space-x-2 shadow-sm transition btn-kids">
+                    <i class="fa-solid fa-volume-high text-lg"></i>
+                    <span>Escuchar</span>
+                </button>
+            </div>
+
+            <!-- Interactive Game Area -->
+            <div id="game-board" class="flex-1 flex flex-col items-center justify-center py-6">
+                <!-- Dinamically injected options -->
+            </div>
+
+            <!-- Footer status / instruction helper -->
+            <div class="flex items-center justify-between pt-4 border-t-2 border-sky-100">
+                <div class="flex items-center space-x-2 text-darkBlue font-semibold text-sm sm:text-base">
+                    <i class="fa-solid fa-hand-pointer text-skyBlue animate-bounce"></i>
+                    <span id="activity-instruction">Toca la letra que escuchaste</span>
+                </div>
+                <button onclick="showScreen('menu-screen')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-xl text-sm transition">
+                    Regresar al Menú
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 4. PANTALLA DE RETROALIMENTACIÓN ================= -->
+        <section id="feedback-screen" class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-10 shadow-2xl border-4 border-white hidden flex-col items-center text-center">
+            <div class="w-24 h-24 bg-mintGreen rounded-full flex items-center justify-center text-white text-5xl mb-4 shadow-lg animate-bounce">
+                🎉
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-title font-bold text-emerald-600 mb-2">¡Muy bien!</h2>
+            <p id="feedback-message" class="text-lg sm:text-xl text-darkBlue font-semibold mb-6">La letra M suena /m/</p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="repeatActivity()" class="btn-kids bg-skyBlue hover:bg-sky-400 text-white font-title font-bold text-lg px-6 py-3 rounded-2xl shadow-md flex items-center space-x-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>REPETIR</span>
+                </button>
+                <button onclick="nextActivity()" class="btn-kids bg-mintGreen hover:bg-emerald-500 text-white font-title font-bold text-lg px-6 py-3 rounded-2xl shadow-md flex items-center space-x-2">
+                    <span>SIGUIENTE</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 5. PANTALLA DE PROGRESO ================= -->
+        <section id="progress-screen" class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white hidden flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-title font-bold text-skyBlue">Mi Progreso</h2>
+                    <p class="text-sm text-gray-600">¡Mira cuánto has aprendido!</p>
+                </div>
+                <div class="bg-amber-100 text-amber-800 font-title font-bold px-4 py-2 rounded-2xl shadow-sm text-sm sm:text-base flex items-center space-x-2">
+                    <span>🏆 ¡GRAN LECTOR!</span>
+                </div>
+            </div>
+
+            <!-- Progress bars list -->
+            <div class="space-y-4 mb-6">
+                <div>
+                    <div class="flex justify-between font-semibold text-sm sm:text-base mb-1">
+                        <span class="flex items-center space-x-2 text-darkBlue"><i class="fa-solid fa-volume-high text-skyBlue"></i><span>Letras y sonidos</span></span>
+                        <span class="text-emerald-600 font-bold">8/10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden shadow-inner">
+                        <div class="bg-skyBlue h-full rounded-full transition-all duration-1000" style="width: 80%"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between font-semibold text-sm sm:text-base mb-1">
+                        <span class="flex items-center space-x-2 text-darkBlue"><span class="font-title font-bold text-softCoral">b d</span><span>Letras que se parecen</span></span>
+                        <span class="text-emerald-600 font-bold">9/10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden shadow-inner">
+                        <div class="bg-softCoral h-full rounded-full transition-all duration-1000" style="width: 90%"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between font-semibold text-sm sm:text-base mb-1">
+                        <span class="flex items-center space-x-2 text-darkBlue"><span class="font-title font-bold text-emerald-600">M+A</span><span>Sílabas</span></span>
+                        <span class="text-emerald-600 font-bold">7/10</span>
+                    </div>
+                    <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden shadow-inner">
+                        <div class="bg-mintGreen h-full rounded-full transition-all duration-1000" style="width: 70%"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between font-semibold text-sm sm:text-base mb-1">
+                        <span class="flex items-center space-x-2 text-darkBlue"><i class="fa-solid fa-book text-amber-500"></i><span>Palabras</span></span>
+                        <span class="text-emerald-600 font-bold">70%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden shadow-inner">
+                        <div class="bg-softYellow h-full rounded-full transition-all duration-1000" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-sky-50 border-2 border-sky-200 p-4 rounded-2xl flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <span class="text-3xl">💡</span>
+                    <div>
+                        <h4 class="font-title font-bold text-darkBlue">¡Lo estás haciendo genial!</h4>
+                        <p class="text-xs sm:text-sm text-gray-600">Continúa practicando las letras similares para dominar la lectura.</p>
+                    </div>
+                </div>
+                <button onclick="showScreen('menu-screen')" class="bg-skyBlue hover:bg-sky-400 text-white font-title font-bold px-4 py-2 rounded-xl shadow transition">
+                    Volver
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 6. VISTA PARA ADULTOS ================= -->
+        <section id="adult-screen" class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white hidden flex-col">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b-2 border-sky-100">
+                <h2 class="text-2xl sm:text-3xl font-title font-bold text-darkBlue flex items-center space-x-2">
+                    <i class="fa-solid fa-user-shield text-skyBlue"></i>
+                    <span>Área para Personas Adultas</span>
+                </h2>
+                <button onclick="showScreen('menu-screen')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-4 py-2 rounded-xl text-sm transition">
+                    Cerrar
+                </button>
+            </div>
+            
+            <div class="space-y-4 text-darkBlue">
+                <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
+                    <h3 class="font-title font-bold text-lg text-skyBlue mb-1">Propósito del Ambiente</h3>
+                    <p class="text-sm">LectoAprende es una plataforma de refuerzo educativo en español diseñada para estudiantes de primer grado, enfocándose en la asociación grafema-fonema, discriminación visual y formación de sílabas y palabras.</p>
+                </div>
+                <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+                    <h3 class="font-title font-bold text-lg text-emerald-600 mb-1">Recomendación de Acompañamiento</h3>
+                    <p class="text-sm">Se sugiere acompañar al estudiante en sesiones cortas de 10 a 15 minutos diarios, permitiendo repetir las actividades según el ritmo personal sin penalizaciones.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        let currentModuleId = 1;
+        let isAudioEnabled = true;
+
+        // Screen Switcher Function
+        function showScreen(screenId) {
+            const screens = ['welcome-screen', 'menu-screen', 'activity-screen', 'feedback-screen', 'progress-screen', 'adult-screen'];
+            screens.forEach(id => {
+                const el = document.getElementById(id);
+                if (id === screenId) {
+                    el.classList.remove('hidden');
+                    el.classList.add('flex');
+                } else {
+                    el.classList.remove('flex');
+                    el.classList.add('hidden');
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle global audio state
+        function toggleAudio() {
+            isAudioEnabled = !isAudioEnabled;
+            const btn = document.getElementById('audio-btn');
+            if (isAudioEnabled) {
+                btn.innerHTML = `<i class="fa-solid fa-volume-high text-skyBlue text-lg"></i><span class="hidden sm:inline">Audio</span>`;
+                btn.className = "bg-sky-100 hover:bg-sky-200 text-darkBlue px-3 py-2 rounded-xl font-bold text-sm flex items-center space-x-1 shadow-sm transition";
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-volume-xmark text-rose-500 text-lg"></i><span class="hidden sm:inline">Silencio</span>`;
+                btn.className = "bg-rose-100 hover:bg-rose-200 text-darkBlue px-3 py-2 rounded-xl font-bold text-sm flex items-center space-x-1 shadow-sm transition";
+            }
+        }
+
+        function playWelcomeSound() {
+            if (!isAudioEnabled) return;
+            // Simulated speech synthesis or audio cue
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance("¡Hola! Soy Lito. Vamos a jugar, escuchar y aprender.");
+                utterance.lang = 'es-ES';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playAudioPrompt() {
+            if (!isAudioEnabled) return;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance("Escucha con mucha atención y selecciona la opción correcta.");
+                utterance.lang = 'es-ES';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Start specific module and load exercise dynamically (Backend Ready)
+        function startModule(moduleId) {
+            currentModuleId = moduleId;
+            showScreen('activity-screen');
+            
+            const badge = document.getElementById('module-badge');
+            badge.innerText = moduleId;
+            
+            const title = document.getElementById('activity-title');
+            const board = document.getElementById('game-board');
+            const instruction = document.getElementById('activity-instruction');
+
+            // Render interactive cards based on module (matches PDF structure)
+            if (moduleId === 1) {
+                title.innerText = "¡Escucha con mucha atención!";
+                instruction.innerText = "Toca la letra que escuchaste (/m/)";
+                board.innerHTML = `
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-2xl">
+                        <div onclick="handleAnswer(true)" class="btn-kids bg-sky-50 hover:bg-sky-100 border-4 border-sky-400 h-28 rounded-2xl flex items-center justify-center font-title text-5xl font-bold text-darkBlue shadow-md cursor-pointer">M</div>
+                        <div onclick="handleAnswer(false)" class="btn-kids bg-sky-50 hover:bg-sky-100 border-4 border-sky-400 h-28 rounded-2xl flex items-center justify-center font-title text-5xl font-bold text-darkBlue shadow-md cursor-pointer">P</div>
+                        <div onclick="handleAnswer(false)" class="btn-kids bg-sky-50 hover:bg-sky-100 border-4 border-sky-400 h-28 rounded-2xl flex items-center justify-center font-title text-5xl font-bold text-darkBlue shadow-md cursor-pointer">S</div>
+                        <div onclick="handleAnswer(false)" class="btn-kids bg-sky-50 hover:bg-sky-100 border-4 border-sky-400 h-28 rounded-2xl flex items-center justify-center font-title text-5xl font-bold text-darkBlue shadow-md cursor-pointer">T</div>
+                    </div>
+                `;
+            } else if (moduleId === 2) {
+                title.innerText = "Letras que se parecen (diferencia b / d)";
+                instruction.innerText = "Selecciona el grafema correcto que escuchas";
+                board.innerHTML = `
+                    <div class="grid grid-cols-2 gap-6 w-full max-w-lg">
+                        <div onclick="handleAnswer(true)" class="btn-kids bg-rose-50 hover:bg-rose-100 border-4 border-rose-400 h-36 rounded-2xl flex items-center justify-center font-title text-6xl font-bold text-softCoral shadow-md cursor-pointer">b</div>
+                        <div onclick="handleAnswer(false)" class="btn-kids bg-rose-50 hover:bg-rose-100 border-4 border-rose-400 h-36 rounded-2xl flex items-center justify-center font-title text-6xl font-bold text-darkBlue shadow-md cursor-pointer">d</div>
+                    </div>
+                `;
+            } else if (moduleId === 3) {
+                title.innerText = "Construyo sílabas";
+                instruction.innerText = "Arrastra o selecciona consonante y vocal";
+                board.innerHTML = `
+                    <div class="flex flex-col items-center space-y-6 w-full">
+                        <div class="flex space-x-3">
+                            <div class="w-20 h-20 bg-sky-100 border-3 border-dashed border-sky-400 rounded-xl flex items-center justify-center font-title text-3xl font-bold text-darkBlue">M</div>
+                            <div class="w-20 h-20 bg-sky-100 border-3 border-dashed border-sky-400 rounded-xl flex items-center justify-center font-title text-3xl font-bold text-darkBlue">A</div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-3 w-full max-w-md">
+                            <div onclick="handleAnswer(true)" class="btn-kids bg-mintGreen text-white font-title text-2xl font-bold h-16 rounded-xl flex items-center justify-center shadow cursor-pointer">M</div>
+                            <div onclick="handleAnswer(false)" class="btn-kids bg-skyBlue text-white font-title text-2xl font-bold h-16 rounded-xl flex items-center justify-center shadow cursor-pointer">P</div>
+                            <div onclick="handleAnswer(false)" class="btn-kids bg-softYellow text-darkBlue font-title text-2xl font-bold h-16 rounded-xl flex items-center justify-center shadow cursor-pointer">A</div>
+                            <div onclick="handleAnswer(false)" class="btn-kids bg-softCoral text-white font-title text-2xl font-bold h-16 rounded-xl flex items-center justify-center shadow cursor-pointer">O</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                title.innerText = "Armo y leo palabras";
+                instruction.innerText = "Ordena las sílabas para formar la palabra CASA";
+                board.innerHTML = `
+                    <div class="flex flex-col items-center space-y-6 w-full">
+                        <div class="w-32 h-32 bg-amber-50 border-3 border-amber-300 rounded-2xl flex flex-col items-center justify-center shadow">
+                            <span class="text-4xl mb-1">🏡</span>
+                            <span class="font-title text-xs font-bold text-gray-600">Imagen de apoyo</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div onclick="handleAnswer(true)" class="btn-kids bg-softYellow text-darkBlue border-3 border-amber-400 px-6 py-4 rounded-xl font-title text-2xl font-bold shadow cursor-pointer">CA + SA</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Handle Exercise Answer and connect to feedback
+        function handleAnswer(isCorrect) {
+            if (isCorrect) {
+                if (isAudioEnabled && 'speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance("¡Muy bien! Excelente trabajo.");
+                    utterance.lang = 'es-ES';
+                    window.speechSynthesis.speak(utterance);
+                }
+                showScreen('feedback-screen');
+            } else {
+                if (isAudioEnabled && 'speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance("Intentémoslo otra vez.");
+                    utterance.lang = 'es-ES';
+                    window.speechSynthesis.speak(utterance);
+                }
+                alert("¡Casi! Inténtalo de nuevo.");
+            }
+        }
+
+        function repeatActivity() {
+            startModule(currentModuleId);
+        }
+
+        function nextActivity() {
+            if (currentModuleId < 4) {
+                startModule(currentModuleId + 1);
+            } else {
+                showScreen('progress-screen');
+            }
+        }
+
+        // Hook for backend API readiness (e.g. fetch('/api/modules') )
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log("LectoAprende Frontend inicializado correctamente. Conectado y listo para el backend.");
+        });
+
+// Función para cargar los módulos desde tu backend de Node.js/Express
+async function cargarModulosDinamicos() {
+    try {
+        const respuesta = await fetch('/api/modules');
+        if (!respuesta.ok) {
+            throw new Error('Error al obtener los módulos del servidor');
+        }
+
+        const modulos = await respuesta.json();
+        console.log("¡Módulos cargados desde el backend exitosamente!", modulos);
+
+        // Aquí puedes actualizar la interfaz de usuario con los datos de 'modulos'
+        // Por ejemplo, recorrer la lista y rellenar las tarjetas de los módulos en pantalla
+    } catch (error) {
+        console.error("No se pudo conectar con la API de módulos:", error);
+    }
+}
+
+// Ejecutar la función cuando la página termine de cargar
+document.addEventListener('DOMContentLoaded', () => {
+    cargarModulosDinamicos();
+});
+
+    </script>
+</body>
+</html>
