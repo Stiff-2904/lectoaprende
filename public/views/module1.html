@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LectoAprende - Módulo 1: Letras y sonidos</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        skyBlue: '#4DAFEA',
+                        softYellow: '#FFD966',
+                        mintGreen: '#75D6B1',
+                        softCoral: '#FF8A80',
+                        darkBlue: '#294C60',
+                    },
+                    fontFamily: {
+                        title: ['Fredoka', 'sans-serif'],
+                        body: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-sky-100 font-body min-h-screen p-4 sm:p-6 flex flex-col items-center justify-center">
+
+    <div class="max-w-4xl w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white relative overflow-hidden">
+
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-softYellow/30 rounded-full blur-xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-mintGreen/30 rounded-full blur-xl pointer-events-none"></div>
+
+        <div class="flex justify-between items-center mb-6 border-b-2 border-sky-100 pb-4 relative z-10">
+            <div class="flex items-center space-x-3">
+                <span class="font-title font-bold text-2xl sm:text-3xl text-skyBlue drop-shadow-sm">LectoAprende</span>
+            </div>
+            <a href="/menu" class="bg-skyBlue hover:bg-sky-500 text-white font-title font-bold px-5 py-2 rounded-2xl shadow transition">
+                MENÚ
+            </a>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-8 relative z-10 gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center relative cursor-pointer" onclick="reproducirInstruccion()">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json"  
+                        background="transparent"  
+                        speed="1"  
+                        style="width: 100%; height: 100%;"  
+                        loop  
+                        autoplay>
+                    </lottie-player>
+                </div>
+                <div class="bg-sky-50 border-4 border-skyBlue rounded-3xl p-4 shadow-md relative max-w-xs">
+                    <p id="instruccion-texto" class="font-title font-bold text-darkBlue text-base sm:text-lg text-center">
+                        ¡Escucha con mucha atención!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Botón para repetir audio de instrucción -->
+            <button onclick="reproducirInstruccion()" class="bg-softYellow hover:bg-yellow-400 text-darkBlue font-title font-bold px-4 py-3 rounded-2xl shadow flex items-center space-x-2 transition">
+                <span class="text-xl">🔊</span>
+                <span>Escuchar</span>
+            </button>
+        </div>
+
+        <!-- Área Central: Tarjetas de Letras (M, P, S, T) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 relative z-10">
+            <button onclick="verificarLetra('M')" class="letra-card bg-white hover:bg-sky-50 border-4 border-skyBlue rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-lg transition transform hover:scale-105 group">
+                <span class="font-title font-bold text-5xl sm:text-7xl text-darkBlue group-hover:text-skyBlue">M</span>
+            </button>
+            <button onclick="verificarLetra('P')" class="letra-card bg-white hover:bg-sky-50 border-4 border-skyBlue rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-lg transition transform hover:scale-105 group">
+                <span class="font-title font-bold text-5xl sm:text-7xl text-darkBlue group-hover:text-skyBlue">P</span>
+            </button>
+            <button onclick="verificarLetra('S')" class="letra-card bg-white hover:bg-sky-50 border-4 border-skyBlue rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-lg transition transform hover:scale-105 group">
+                <span class="font-title font-bold text-5xl sm:text-7xl text-darkBlue group-hover:text-skyBlue">S</span>
+            </button>
+            <button onclick="verificarLetra('T')" class="letra-card bg-white hover:bg-sky-50 border-4 border-skyBlue rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-lg transition transform hover:scale-105 group">
+                <span class="font-title font-bold text-5xl sm:text-7xl text-darkBlue group-hover:text-skyBlue">T</span>
+            </button>
+        </div>
+
+        <!-- Instrucción inferior con icono de mano -->
+        <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl py-3 px-4 flex items-center justify-center space-x-3 text-center relative z-10">
+            <span class="text-2xl">👆</span>
+            <span class="font-title font-semibold text-darkBlue text-base sm:text-lg">Toca la letra que escuchaste</span>
+        </div>
+
+    </div>
+
+    <script>
+        const letrasObjetivo = ['M', 'P', 'S', 'T'];
+        let indiceActual = 0;
+
+        // Función para hablar usando la síntesis de voz del navegador
+        function hablar(texto, callback) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.9;
+                if (callback) {
+                    utterance.onend = callback;
+                }
+                window.speechSynthesis.speak(utterance);
+            } else if (callback) {
+                callback();
+            }
+        }
+
+        function lanzarConfeti() {
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function reproducirInstruccion() {
+            const letraActual = letrasObjetivo[indiceActual];
+            document.getElementById('instruccion-texto').innerText = `¡Escucha con atención! Busca la letra: ${letraActual}`;
+            hablar(`Escucha con atención. ¿Cuál letra es? Busca la letra ${letraActual}`);
+        }
+
+        function verificarLetra(letraSeleccionada) {
+            const letraActual = letrasObjetivo[indiceActual];
+
+            if (letraSeleccionada === letraActual) {
+                lanzarConfeti();
+                hablar("¡Muy bien! ¡Excelente acierto!", () => {
+                    indiceActual++;
+                    if (indiceActual < letrasObjetivo.length) {
+                        reproducirInstruccion();
+                    } else {
+                        lanzarConfeti();
+                        setTimeout(lanzarConfeti, 500);
+                        hablar("¡Increíble! Has completado el módulo. Volviendo al menú principal.", () => {
+                            window.location.href = '/menu';
+                        });
+                    }
+                });
+            } else {
+                hablar("Inténtémoslo otra vez. Escucha con atención.", () => {
+                    reproducirInstruccion();
+                });
+            }
+        }
+
+        // Iniciar automáticamente al cargar la vista
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                reproducirInstruccion();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

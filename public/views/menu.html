@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LectoAprende - Menú Principal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        skyBlue: '#4DAFEA',
+                        softYellow: '#FFD966',
+                        mintGreen: '#75D6B1',
+                        softCoral: '#FF8A80',
+                        darkBlue: '#294C60',
+                    },
+                    fontFamily: {
+                        title: ['Fredoka', 'sans-serif'],
+                        body: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-sky-100 font-body min-h-screen p-4 sm:p-6 flex flex-col items-center justify-center">
+
+    <!-- Contenedor Principal del Menú -->
+    <div class="max-w-4xl w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white relative">
+        
+        <!-- Encabezado -->
+        <div class="flex justify-between items-center mb-6 border-b-2 border-sky-100 pb-4">
+            <div class="flex items-center space-x-3">
+                <img src="/images/lito.png" alt="Lito" class="w-12 h-12 object-contain">
+                <span class="font-title font-bold text-2xl text-skyBlue">LectoAprende</span>
+            </div>
+            <a href="/" class="bg-skyBlue hover:bg-sky-500 text-white font-title font-bold px-5 py-2 rounded-2xl shadow transition">
+                INICIO
+            </a>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-title font-bold text-darkBlue text-center mb-6">
+            ¿Qué quieres practicar hoy? 🎮
+        </h2>
+
+        <!-- Tarjetas de Módulos (Basado en el diseño del documento) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <!-- Módulo 1 -->
+            <a href="/module1" class="bg-sky-50 hover:bg-sky-100 border-4 border-skyBlue rounded-3xl p-5 flex items-center space-x-4 transition transform hover:scale-105 shadow-md">
+                <div class="bg-skyBlue text-white font-title text-2xl w-12 h-12 rounded-2xl flex items-center justify-center shadow">1</div>
+                <div>
+                    <h3 class="font-title font-bold text-lg text-darkBlue">Letras y sonidos</h3>
+                    <p class="text-sm text-gray-600">Reconocimiento y asociación fonema</p>
+                </div>
+            </a>
+
+            <!-- Módulo 2 -->
+            <a href="#" class="bg-amber-50 hover:bg-amber-100 border-4 border-softYellow rounded-3xl p-5 flex items-center space-x-4 transition transform hover:scale-105 shadow-md">
+                <div class="bg-softYellow text-darkBlue font-title text-2xl w-12 h-12 rounded-2xl flex items-center justify-center shadow">2</div>
+                <div>
+                    <h3 class="font-title font-bold text-lg text-darkBlue">Letras que se parecen</h3>
+                    <p class="text-sm text-gray-600">Discriminación b/d y p/q</p>
+                </div>
+            </a>
+
+            <!-- Módulo 3 -->
+            <a href="#" class="bg-emerald-50 hover:bg-emerald-100 border-4 border-mintGreen rounded-3xl p-5 flex items-center space-x-4 transition transform hover:scale-105 shadow-md">
+                <div class="bg-mintGreen text-white font-title text-2xl w-12 h-12 rounded-2xl flex items-center justify-center shadow">3</div>
+                <div>
+                    <h3 class="font-title font-bold text-lg text-darkBlue">Construyo sílabas</h3>
+                    <p class="text-sm text-gray-600">Combinación consonante y vocal</p>
+                </div>
+            </a>
+
+            <!-- Módulo 4 -->
+            <a href="#" class="bg-rose-50 hover:bg-rose-100 border-4 border-softCoral rounded-3xl p-5 flex items-center space-x-4 transition transform hover:scale-105 shadow-md">
+                <div class="bg-softCoral text-white font-title text-2xl w-12 h-12 rounded-2xl flex items-center justify-center shadow">4</div>
+                <div>
+                    <h3 class="font-title font-bold text-lg text-darkBlue">Armo y leo palabras</h3>
+                    <p class="text-sm text-gray-600">Ordenamiento y lectura simple</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Botones inferiores de Progreso y Adultos -->
+        <div class="flex flex-col sm:flex-row justify-between gap-4">
+            <a href="/progress" class="bg-mintGreen hover:bg-emerald-400 text-darkBlue font-title font-bold text-center py-3 px-6 rounded-2xl shadow transition flex items-center justify-center space-x-2">
+                <span>⭐ Mi Progreso</span>
+            </a>
+            <a href="/adults" class="bg-darkBlue hover:bg-slate-700 text-white font-title font-bold text-center py-3 px-6 rounded-2xl shadow transition flex items-center justify-center space-x-2">
+                <span>👤 Para Adultos</span>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
