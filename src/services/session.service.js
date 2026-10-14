@@ -58,7 +58,10 @@ function recordAttempt(sessionId, payload) {
   session.attempts.push(attempt);
 
   if (correct) {
-    session.progress[payload.moduleId] = 3;
+    const list = session.completed[payload.moduleId];
+    if (!list.includes(exercise.id)) list.push(exercise.id);
+    const n = list.length;
+    session.progress[payload.moduleId] = n >= 5 ? 3 : n >= 3 ? 2 : 1;
   }
 
   return {
@@ -66,18 +69,18 @@ function recordAttempt(sessionId, payload) {
     correct,
     feedback: correct ? exercise.feedback.correct : exercise.feedback.incorrect,
     canRetry: !correct,
-    progress: buildProgress(session.progress)
+    progress: buildProgress(session.progress, session.completed)
   };
 }
 
 function getProgress(sessionId) {
   const session = requireSession(sessionId);
-  return buildProgress(session.progress);
+  return buildProgress(session.progress, session.completed);
 }
 
 function getAdultSummary(sessionId) {
   const session = requireSession(sessionId);
-  const progress = buildProgress(session.progress);
+  const progress = buildProgress(session.progress, session.completed);
   const practicedIds = new Set(session.attempts.map((attempt) => attempt.moduleId));
   const practicedModules = modules
     .filter((module) => practicedIds.has(module.id))

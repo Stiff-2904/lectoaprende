@@ -1,11 +1,14 @@
 const modules = require("../data/modules");
+const exercises = require("../data/exercises");
 
-function buildProgress(progress) {
+function buildProgress(progress, completed = {}) {
   const moduleProgress = modules.map((module) => ({
     moduleId: module.id,
     title: module.title,
     stars: progress[module.id] ?? 0,
-    maxStars: 3
+    maxStars: 3,
+    completedExercises: (completed[module.id] || []).length,
+    totalExercises: exercises.filter(e => e.moduleId === module.id).length
   }));
 
   const totalStars = moduleProgress.reduce((sum, item) => sum + item.stars, 0);

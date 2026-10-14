@@ -1,0 +1,24 @@
+[
+  {
+    "id":"luna", "title":"Lito y la luna", "icon":"🌙", "level":"Primeras oraciones", "subtitle":"Un paseo brillante en el cielo",
+    "pages":[
+      {"scene":"🌌", "text":"Lito mira la luna. La luna brilla en el cielo."},
+      {"scene":"🦉", "text":"Un búho saluda a Lito. Los dos miran las estrellas."},
+      {"scene":"🌟", "text":"Lito ve una estrella muy grande. ¡Qué bonita es la noche!"},
+      {"scene":"🦜", "text":"Lito vuelve a casa feliz. Le cuenta todo a su amiga Lola."}
+    ],
+    "question":"¿Qué brilla en el cielo?", "answers":["La luna","Una pelota","Una taza"], "correctIndex":0,
+    "correctMessage":"¡Muy bien! La luna brilla en el cielo.", "tryMessage":"Vuelve a leer la primera página y prueba otra vez."
+  },
+  {
+    "id":"sapo", "title":"Sapo y la sopa", "icon":"🐸", "level":"Palabras y rimas", "subtitle":"Una comida entre amigos",
+    "pages":[
+      {"scene":"🐸", "text":"Sapo prepara una sopa. La sopa huele muy bien."},
+      {"scene":"🫕", "text":"Lito llega con una taza. Sapo sonríe al verlo."},
+      {"scene":"🥕", "text":"Juntos ponen una zanahoria en la olla. ¡Qué rica sopa!"},
+      {"scene":"🦜", "text":"Sapo y Lito comparten la sopa. Después salen a jugar."}
+    ],
+    "question":"¿Qué prepara Sapo?", "answers":["Una tarta","Una sopa","Un jugo"], "correctIndex":1,
+    "correctMessage":"¡Exacto! Sapo prepara una sopa.", "tryMessage":"Puedes volver a leer el cuento y descubrir la respuesta."
+  }
+]

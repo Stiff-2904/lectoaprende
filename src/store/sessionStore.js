@@ -11,7 +11,8 @@ function createSession() {
     id: randomUUID(),
     createdAt: new Date().toISOString(),
     progress: newProgress(),
-    attempts: []
+    attempts: [],
+    completed: { 1: [], 2: [], 3: [], 4: [] }
   };
 
   sessions.set(session.id, session);

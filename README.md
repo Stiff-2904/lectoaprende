@@ -1,103 +1,22 @@
-# LectoAprende Backend
+# LectoAprende · Aventuras con Lito
 
-API REST para el prototipo académico de LectoAprende.
+¡Proyecto de lectoescritura para primer grado! Incluye a Lito, el loro de la versión original, 20 retos en cuatro mundos, dos cuentos, un álbum de pegatinas y soporte opcional para la voz infantil Marina de Azure.
 
-## Alcance
+**Abra primero [ETAPAS-DE-RENOVACION.md](ETAPAS-DE-RENOVACION.md)** para actualizar el proyecto sin perder el `.env` que ya configuró.
 
-- Sin usuarios, login ni cuentas personales.
-- Sin base de datos en esta etapa.
-- Sesiones anónimas almacenadas temporalmente en memoria.
-- El estado se reinicia cuando se apaga el servidor.
-- Cuatro módulos de práctica.
-- Validación de respuestas.
-- Progreso por estrellas.
-- Resumen breve para la persona adulta.
+## Inicio rápido
 
-## Requisitos
-
-- Node.js 20 o superior.
-- npm.
-
-## Instalación
+Requiere Node.js 20 o superior. Abra una terminal dentro de la carpeta del proyecto:
 
 ```bash
 npm install
-cp .env.example .env
-npm run dev
+npm start
 ```
 
-En Windows puede copiar `.env.example` a `.env` manualmente.
+Visite `http://localhost:3000`. Para probar la voz, abra `http://localhost:3000/adults`.
 
-Servidor por defecto:
+**Privacidad:** no se piden nombres ni cuentas infantiles. Retos y pegatinas se guardan en este navegador (`localStorage`); los intentos del servidor son temporales. No se incluye ninguna clave de Azure.
 
-```text
-http://localhost:3000
-```
+**Pruebas:** `npm test` (tras instalar dependencias) o `node --test tests/core.test.js` para comprobar el núcleo sin dependencias externas.
 
-## Pruebas automáticas
-
-```bash
-npm test
-```
-
-## Endpoints
-
-| Método | Ruta | Descripción |
-|---|---|---|
-| GET | `/api/health` | Comprueba que la API está activa |
-| GET | `/api/modules` | Lista los cuatro módulos |
-| GET | `/api/modules/:moduleId` | Devuelve un módulo |
-| GET | `/api/modules/:moduleId/exercises` | Lista ejercicios de un módulo |
-| GET | `/api/modules/:moduleId/exercises/:exerciseId` | Devuelve un ejercicio |
-| POST | `/api/sessions` | Crea una sesión anónima |
-| POST | `/api/sessions/:sessionId/attempts` | Registra y valida un intento |
-| GET | `/api/sessions/:sessionId/progress` | Devuelve el progreso |
-| GET | `/api/sessions/:sessionId/adult-summary` | Devuelve resumen para adulto |
-| DELETE | `/api/sessions/:sessionId` | Elimina la sesión temporal |
-
-## Ejemplo de flujo
-
-### 1. Crear sesión
-
-```http
-POST /api/sessions
-```
-
-Respuesta:
-
-```json
-{
-  "data": {
-    "sessionId": "uuid",
-    "createdAt": "2026-10-03T00:00:00.000Z",
-    "message": "Sesión anónima creada. No se solicitaron datos personales."
-  }
-}
-```
-
-### 2. Enviar respuesta
-
-```http
-POST /api/sessions/:sessionId/attempts
-Content-Type: application/json
-
-{
-  "moduleId": 1,
-  "exerciseId": "m1-e1",
-  "answer": "M"
-}
-```
-
-Para el módulo 4, la respuesta es un arreglo:
-
-```json
-{
-  "moduleId": 4,
-  "exerciseId": "m4-e1",
-  "answer": ["ME", "SA"]
-}
-```
-
-## Probar manualmente
-
-El archivo `requests.http` contiene ejemplos listos para usar con la extensión REST Client de VS Code. También puede usar Postman o Insomnia.
+**Voz:** siga [GUIA-VOZ-LITO.md](GUIA-VOZ-LITO.md) para configurar Azure con su propio archivo privado `.env`.

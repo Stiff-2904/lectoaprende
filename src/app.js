@@ -5,6 +5,7 @@ const cors = require("cors");
 const healthRoutes = require("./routes/health.routes");
 const moduleRoutes = require("./routes/module.routes");
 const sessionRoutes = require("./routes/session.routes");
+const voiceRoutes = require("./routes/voice.routes");
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -26,8 +27,12 @@ app.get("/menu", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/views/menu.html'));
 });
 
-app.get("/module1", (req, res) => {
+app.get(["/module1", "/module2", "/module3", "/module4"], (req, res) => {
     res.sendFile(path.join(__dirname, '../public/views/module1.html'));
+});
+
+app.get("/stories", (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/views/stories.html'));
 });
 
 app.get("/progress", (req, res) => {
@@ -42,6 +47,7 @@ app.get("/adults", (req, res) => {
 app.use("/api/health", healthRoutes);
 app.use("/api/modules", moduleRoutes);
 app.use("/api/sessions", sessionRoutes);
+app.use("/api/voice", voiceRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
