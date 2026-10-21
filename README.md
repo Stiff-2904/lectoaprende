@@ -1,5 +1,7 @@
 # LectoAprende · Aventuras con Lito
 
+**Publicación en el aula virtual:** consulta [GUIA-PUBLICAR-AULA-VIRTUAL.md](GUIA-PUBLICAR-AULA-VIRTUAL.md). El archivo `render.yaml` y el servidor están preparados para alojamiento web Node.js en Render.
+
 Aplicación web de lectoescritura para primer grado. **Los ocho mundos educativos y las secciones complementarias están implementados.** La presentación visual se mantiene para modificarla en una etapa posterior.
 
 ## Funciones incluidas
@@ -13,6 +15,7 @@ Aplicación web de lectoescritura para primer grado. **Los ocho mundos educativo
 - **Personas adultas:** avance en los ocho mundos, conteo local de intentos, sugerencia para continuar y reinicio del progreso.
 - **Mundos desbloqueables:** al iniciar sólo está abierto el Mundo 1. Cada mundo siguiente se desbloquea al superar los cinco ejercicios de todos los anteriores. El mapa y el álbum muestran candados; tampoco se puede saltar un mundo escribiendo directamente su dirección. Al completarlo aparece un botón para continuar al siguiente.
 - **Continuidad:** se guarda el progreso en el navegador; al abrir un mundo se reanuda en el primer ejercicio pendiente. Los mundos completos permiten volver a practicarse sin perder las estrellas.
+- **Música de fondo:** 12 ambientes instrumentales originales (ocho mundos y cuatro cuentos), cada uno con dos melodías alternas por visita (24 pistas MP3). El volumen baja cuando habla Lito, continúa entre retos/páginas, se detiene al salir y dispone de un botón para silenciar; la preferencia se conserva en el navegador. El audio no necesita conexión con servicios externos ni claves de música. Algunos navegadores exigen pulsar «Activar música» para iniciar la primera reproducción.
 - **Voz automática:** Lito intenta leer por sí solo cada instrucción una vez al llegar a un reto, cada página de cuento y su pregunta, además de la bienvenida. El botón de audio queda para repetirla. Se evita solapar voces al cambiar de actividad. Audio mediante voz del dispositivo o Azure Speech / Marina opcional. La voz del dispositivo permanece fija entre mundos; si Azure está configurado pero falla, no se cambia de voz sin avisar.
 
 ## Ejecutar
@@ -60,7 +63,7 @@ También es posible ejecutar las pruebas del motor educativo y los flujos simula
 node --test tests/core.test.js tests/frontend.test.js
 ```
 
-Incluye pruebas de los 40 retos, reintentos, validación de opciones, ocho mundos completados, continuidad, repetición, estrellas, cuentos, pegatinas, reinicio y endpoints de la API. Consulta [PRUEBAS-Y-ENTREGA.md](PRUEBAS-Y-ENTREGA.md) para ver el alcance de verificación.
+Incluye pruebas de los 40 retos, reintentos, validación de opciones, ocho mundos completados, continuidad, repetición, estrellas, cuentos, pegatinas, reinicio y endpoints de la API. Consulta [PRUEBAS-Y-ENTREGA.md](PRUEBAS-Y-ENTREGA.md) para ver el alcance de verificación. **58 pruebas automatizadas superadas**, incluidas siete pruebas específicas de música.
 
 ## Almacenamiento y privacidad
 
@@ -75,6 +78,8 @@ Para activar la voz infantil recomendada sin exponer contraseñas, consulta [GUI
 - `src/`: servidor Express, rutas de API, servicios y banco de ejercicios.
 - `public/views/`: páginas HTML.
 - `public/js/kids.js`: navegación, actividades, cuentos, voz y progreso del navegador.
+- `public/js/music.js`: música por escena, alternancia de arreglos, control de volumen y silenciado.
+- `public/audio/music/`: 24 archivos MP3 instrumentales sintetizados expresamente para la aplicación, sin samples ni pistas de terceros.
 - `public/css/` y `public/images/`: apariencia actual, reservada para la siguiente etapa.
 - `tests/`: pruebas del motor, navegador simulado y API.
 
@@ -90,3 +95,13 @@ Además de los cuatro mundos originales, ahora están:
 Cada mundo tiene cinco retos y se abre al terminar los anteriores. La narración de instrucciones continúa siendo automática (si el navegador permite audio sin interacción); el botón sirve para repetirla. Hay cuatro cuentos, con lectura por páginas, preguntas y pegatinas: *Lito y la luna*, *Sapo y la sopa*, *La semilla viajera* y *La cometa de colores*.
 
 Los logros existentes de los mundos 1–4 se conservan al actualizar en el mismo navegador. Los datos permanecen locales; borrar el almacenamiento del navegador también borra los logros.
+
+## Música instrumental en cada aventura
+
+Cada mundo y cada cuento tiene su propio ambiente musical y **dos variantes distintas** que se alternan al entrar. Puedes entrar al Mundo 1, volver al menú y regresar al Mundo 1 para escuchar la otra versión. Las pistas se repiten suavemente hasta salir. La voz de Lito tiene prioridad y la música se atenúa mientras está leyendo.
+
+Los archivos fueron compuestos y sintetizados de forma original para esta versión del proyecto. No contienen letras, grabaciones, muestras de instrumentos ni canciones de otros artistas; se reproducen localmente desde el servidor del proyecto. No se requieren plataformas de música, APIs ni cuentas adicionales.
+
+La música viene activada por defecto, pero los navegadores pueden bloquear la reproducción sin un primer toque. En ese caso, el botón **🎵 Activar música** aparece en la parte superior de los mundos y cuentos. El usuario puede silenciarla sin dejar de escuchar a Lito.
+
+Si ya publicaste el proyecto en Render mediante GitHub, **sube a tu mismo repositorio los cambios de esta versión**, en especial `public/audio/music/`, `public/js/music.js`, `public/js/kids.js`, `public/views/` y `public/css/kids.css`. Render suele desplegar automáticamente al recibir el commit. **No necesitas crear otro Web Service ni cambiar el enlace público**.

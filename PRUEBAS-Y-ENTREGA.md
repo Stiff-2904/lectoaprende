@@ -62,3 +62,11 @@
 - Se recuerda la voz del dispositivo entre mundos para minimizar cambios de timbre.
 - El Mundo 4 utiliza ahora sílabas en minúsculas en las instrucciones narradas para mejorar su pronunciación.
 - Las pruebas automatizadas simulan los fallos del servicio y verifican la coherencia del audio. Es necesario escuchar el resultado real en el navegador y, si se usa, con las credenciales de Azure configuradas.
+
+
+## Incorporación posterior: música por mundos y cuentos
+
+- 24 pistas MP3 originales: dos versiones por cada uno de los ocho mundos y cuatro cuentos.
+- Alternancia de pistas comprobada, control de silencio persistente, volumen atenuado durante la narración, pausa al cambiar de pestaña y manejo del bloqueo de reproducción automática.
+- **58 pruebas automatizadas superadas** al ejecutar `npm test` con las dependencias instaladas (incluye siete pruebas nuevas de música).
+- La revisión automática se hizo mediante pruebas del código y simulaciones. La ejecución visual con un navegador real quedó restringida por las políticas de red del entorno de prueba; se recomienda comprobar audio real en Chrome, Edge y en el navegador del aula virtual.

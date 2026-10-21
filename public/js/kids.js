@@ -89,6 +89,7 @@
     return best;
   }
   function stopSound() {
+    window.LectoMusic?.onNarrationEnd();
     autoSpeakToken++;
     speakNumber++;
     if (audioController) { audioController.abort(); audioController = null; }
@@ -96,12 +97,15 @@
     if (activeAudioUrl) { URL.revokeObjectURL(activeAudioUrl); activeAudioUrl = null; }
     if (hasSpeech) speechSynthesis.cancel();
   }
-  function deviceSpeak(text) {
+  function deviceSpeak(text, requestNumber) {
     if (!hasSpeech) return false;
     const msg = new SpeechSynthesisUtterance(text), selected = preferredVoice();
     if (selected) { msg.voice = selected; msg.lang = selected.lang; }
     else msg.lang = 'es-MX';
     msg.rate = .88; msg.pitch = 1.13; msg.volume = 1;
+    const onFinish = () => { if (requestNumber === speakNumber) window.LectoMusic?.onNarrationEnd(); };
+    msg.onend = onFinish;
+    msg.onerror = onFinish;
     speechSynthesis.speak(msg);
     return true;
   }
@@ -110,10 +114,12 @@
     stopSound();
     animateMascot();
     const requestNumber = speakNumber;
+    window.LectoMusic?.onNarrationStart();
     const clean = text.replace(/[🌟💡🎉✨]/gu,'').trim();
     const status = $('voice-status');
     if (choice() !== 'lito' || !voiceStatus?.configured) {
-      const success = deviceSpeak(clean);
+      const success = deviceSpeak(clean, requestNumber);
+      if (!success) window.LectoMusic?.onNarrationEnd();
       if (!success && status) status.textContent = 'Este dispositivo no puede reproducir audio. Pruebe Chrome o Edge.';
       return success;
     }
@@ -130,6 +136,7 @@
       activeAudioUrl = URL.createObjectURL(blob);
       const player = new Audio(activeAudioUrl); activeAudio = player;
       const cleanup = () => {
+        if (requestNumber === speakNumber) window.LectoMusic?.onNarrationEnd();
         if (activeAudio === player) {
           activeAudio = null;
           if (activeAudioUrl) URL.revokeObjectURL(activeAudioUrl);
@@ -144,6 +151,7 @@
     } catch (_) {
       if (requestNumber !== speakNumber) return false;
       audioController = null;
+      window.LectoMusic?.onNarrationEnd();
       if (activeAudio) { activeAudio.pause(); activeAudio.removeAttribute('src'); }
       if (activeAudioUrl) URL.revokeObjectURL(activeAudioUrl);
       activeAudioUrl = null; activeAudio = null;
@@ -281,6 +289,7 @@
     try {all=await api(`/api/modules/${id}/exercises`);await session();}
     catch (_) { $('status').textContent='No se pudo iniciar. Comprueba tu conexión e inténtalo de nuevo.';return; }
     if (!all.length) { $('status').textContent='Este mundo no tiene retos disponibles.'; return; }
+    window.LectoMusic?.enter('world', id);
     const replay=new URLSearchParams(location.search).has('repetir');
     const firstPending=()=>all.findIndex(e=>!stored().completed.includes(e.id));
     let index=replay ? 0 : firstPending(), busy=false, selected=[], current=null, nextIndex=null;
@@ -449,6 +458,7 @@
       return;
     }
     $('story-library').hidden=true;$('story-reader').hidden=false;
+    window.LectoMusic?.enter('story',active.id);
     $('story-title').textContent=active.title;
     $('story-subtitle').textContent=active.subtitle;
     let page=0, quiz=false;

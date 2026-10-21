@@ -57,3 +57,9 @@ body{background-color:#effafa;background-image:radial-gradient(circle at 10% 5%,
 .options .option{overflow-wrap:anywhere}
 .options:has(.option:nth-child(3)) .option{font-size:clamp(22px,3.3vw,46px)}
 @media(max-width:690px){.options .option{font-size:clamp(22px,6vw,42px)}}
+
+/* Música: botón accesible y discreto en los mundos y cuentos. */
+.music-toggle{font:inherit;flex-shrink:0;border:2px solid #bddbd4;border-radius:16px;background:#f5fff9;color:#29534d;padding:10px 13px;font-size:14px;font-weight:900;cursor:pointer;min-height:46px;box-shadow:0 3px 0 #d7eae3}
+.music-toggle:hover{background:#eafaf2}
+.music-toggle:focus-visible{outline:3px solid #457fc7;outline-offset:3px}
+@media(max-width:890px){.music-toggle{align-self:center}}

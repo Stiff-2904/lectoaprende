@@ -1,0 +1,13 @@
+# Configuración para publicar LectoAprende como servicio web en Render.
+# Las credenciales de Azure Speech se agregan desde Environment en Render.
+services:
+  - type: web
+    name: lectoaprende
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
