@@ -66,11 +66,11 @@ test('Cada mundo alterna música cuando se visita de nuevo, sin cambiar el resto
 test('Lito baja el volumen de música al narrar y vuelve a subirlo al terminar',async()=>{
   const a=loadMusic();
   a.music.enter('story','luna'); await settle();
-  assert.equal(a.player.volume,.18);
+  assert.equal(a.player.volume,.38);
   a.music.onNarrationStart();
-  assert.equal(a.player.volume,.025);
+  assert.equal(a.player.volume,.075);
   a.music.onNarrationEnd();
-  assert.equal(a.player.volume,.18);
+  assert.equal(a.player.volume,.38);
   assert.equal(a.attrs['aria-pressed'],'true');
 });
 
@@ -91,7 +91,7 @@ test('El niño puede silenciar y volver a activar; la preferencia persiste',asyn
 test('Cuando autoplay está restringido, aparece botón para iniciar la música',async()=>{
   const a=loadMusic({rejectPlay:true});
   a.music.enter('world',4); await settle();
-  assert.equal(a.button.textContent,'🎵 Activar música');
+  assert.equal(a.button.textContent,'▶️ Iniciar música');
   a.listeners.click(); await settle();
   assert.equal(a.player.paused,false);
   assert.equal(a.button.textContent,'🔇 Silenciar música');

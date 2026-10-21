@@ -105,3 +105,8 @@ Los archivos fueron compuestos y sintetizados de forma original para esta versi�
 La música viene activada por defecto, pero los navegadores pueden bloquear la reproducción sin un primer toque. En ese caso, el botón **🎵 Activar música** aparece en la parte superior de los mundos y cuentos. El usuario puede silenciarla sin dejar de escuchar a Lito.
 
 Si ya publicaste el proyecto en Render mediante GitHub, **sube a tu mismo repositorio los cambios de esta versión**, en especial `public/audio/music/`, `public/js/music.js`, `public/js/kids.js`, `public/views/` y `public/css/kids.css`. Render suele desplegar automáticamente al recibir el commit. **No necesitas crear otro Web Service ni cambiar el enlace público**.
+
+
+## Corrección de audio para Render (octubre 2026)
+
+Consulta `ACTUALIZAR-MUSICA-EN-RENDER.md`. El inicio automático depende del navegador; la app muestra una indicación cuando requiere un clic y puede iniciar la música al tocar cualquier actividad.

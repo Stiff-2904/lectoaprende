@@ -63,3 +63,7 @@ body{background-color:#effafa;background-image:radial-gradient(circle at 10% 5%,
 .music-toggle:hover{background:#eafaf2}
 .music-toggle:focus-visible{outline:3px solid #457fc7;outline-offset:3px}
 @media(max-width:890px){.music-toggle{align-self:center}}
+
+/* Aviso visible si el navegador restringe autoplay; sin bloquear la actividad. */
+.music-help{margin:10px auto;max-width:900px;padding:11px 16px;background:#fff9e7;color:#493c1a;border:2px solid #f0d38a;border-radius:14px;font-size:15px;font-weight:700;text-align:center}
+.music-help[hidden]{display:none}
