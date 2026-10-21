@@ -26,6 +26,26 @@ const modules = [
     icon: "📖",
     description: "Ordena sílabas y construye palabras simples.",
     objective: "Construir y leer palabras simples con apoyo visual."
+  },
+  {
+    id: 5, title: "Detectives de vocales", icon: "🔍",
+    description: "Encuentra la vocal que falta para completar una palabra.",
+    objective: "Reconocer vocales dentro de palabras familiares."
+  },
+  {
+    id: 6, title: "La isla de las rimas", icon: "🎶",
+    description: "Escucha palabras y descubre cuáles riman.",
+    objective: "Desarrollar conciencia fonológica a través de rimas."
+  },
+  {
+    id: 7, title: "La montaña de palmadas", icon: "👏",
+    description: "Cuenta sílabas y encuentra las que faltan.",
+    objective: "Segmentar palabras en sílabas y completar palabras."
+  },
+  {
+    id: 8, title: "La ciudad de las oraciones", icon: "🏙️",
+    description: "Ordena palabras para construir oraciones con sentido.",
+    objective: "Leer y ordenar oraciones sencillas."
   }
 ];
 

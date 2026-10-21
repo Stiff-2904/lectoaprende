@@ -36,3 +36,24 @@ body{background-color:#effafa;background-image:radial-gradient(circle at 10% 5%,
 @media(max-width:890px){.topbar{flex-direction:column;gap:12px}.topnav{justify-content:center}.journey{gap:22px 32px}.journey-stop{flex-direction:column;text-align:center}.journey-end{flex-wrap:wrap}.journey-end .btn{margin-left:0}.hero .mascot{max-height:315px}.new-hero{min-height:480px}.mascot-stage{min-height:340px}}
 @media(max-width:690px){.shell{width:min(100% - 20px,600px)}.topbar{padding:12px 0}.topnav{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.topnav a{font-size:12px;text-align:center;line-height:1.2;padding:10px 4px}.paper{padding:22px 18px}.new-hero{display:flex;flex-direction:column;padding-top:14px}.mascot-stage{min-height:245px;width:100%}.hero .mascot{max-height:218px}.mascot-caption{bottom:2px;padding:8px 14px;font-size:17px}.hero-copy{text-align:center}.hero .title{font-size:40px}.quick-picks{grid-template-columns:1fr;gap:11px}.quick-card{flex-direction:row;text-align:left;padding:13px 19px;gap:15px}.quick-card strong{font-size:19px}.quick-card small{margin-left:auto;font-size:12px}.quick-card>span{font-size:33px}.world-head{align-items:flex-start}.world-head .mini-lito{width:100px}.journey{display:flex;flex-direction:column;gap:19px;margin:26px auto}.journey:before{left:40px;top:8px;bottom:8px}.journey-stop,.journey-stop:nth-child(2n){transform:none;flex-direction:row;text-align:left;gap:13px;padding:15px;min-height:140px}.journey-stop:hover,.journey-stop:nth-child(2n):hover{transform:translateY(-3px)}.map-node{flex-basis:64px;height:64px;font-size:34px}.map-content h2{font-size:22px}.journey-end{margin-top:15px}.journey-end>span{font-size:32px}.journey-end h2{font-size:21px}.game-header .mini-lito{width:95px;height:100px}.game-header h1{font-size:29px}.options{gap:11px}.option{min-height:108px}.sticker-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.story-library{grid-template-columns:1fr}.story-scene{min-height:155px;font-size:90px}.story-reader-head .mini-lito{max-width:100px}.story-answers{grid-template-columns:1fr}.story-answers .option{min-height:64px}.listen-actions .btn{width:100%}.hero-buttons{gap:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Respect the hidden attribute even on grid and flex elements. */
+[hidden]{display:none!important}
+
+/* Avance secuencial: los mundos posteriores permanecen inaccesibles hasta desbloquearse. */
+.journey-stop.map-locked,.journey-stop.map-locked:nth-child(2),.journey-stop.map-locked:nth-child(3),.journey-stop.map-locked:nth-child(4){background:#eef1f4;border-color:#c8d0d8;box-shadow:0 6px 0 #dce2e8;color:#738092;filter:saturate(.55);cursor:not-allowed}
+.journey-stop.map-locked:hover{box-shadow:0 6px 0 #dce2e8;transform:none}
+.journey-stop.map-locked:nth-child(2n):hover{transform:translateY(34px)}
+.journey-stop.map-locked .map-content strong{color:#69778b}
+.progress-locked{display:inline-block;background:#f0f2f5;color:#68758a;border-color:#d6dce4;box-shadow:none;cursor:not-allowed}
+@media(max-width:690px){.journey-stop.map-locked:nth-child(2n):hover{transform:none}}
+
+/* Nuevos mundos: variantes suaves dentro de la estética original. */
+.journey-stop:nth-child(5){background:linear-gradient(135deg,#ecfff5,#eafff8);border-color:#97daba;box-shadow:0 8px 0 #cfebd9}
+.journey-stop:nth-child(6){background:linear-gradient(135deg,#f9efff,#edf4ff);border-color:#c4adef;box-shadow:0 8px 0 #e4d8f2}
+.journey-stop:nth-child(7){background:linear-gradient(135deg,#fff4e8,#fff8da);border-color:#f5c58d;box-shadow:0 8px 0 #f9e5c9}
+.journey-stop:nth-child(8){background:linear-gradient(135deg,#edf9ff,#e8f0ff);border-color:#a1c9f2;box-shadow:0 8px 0 #d6e6f7}
+.journey-stop.map-locked:nth-child(n+5){background:#eef1f4;border-color:#c8d0d8;box-shadow:0 6px 0 #dce2e8}
+.options .option{overflow-wrap:anywhere}
+.options:has(.option:nth-child(3)) .option{font-size:clamp(22px,3.3vw,46px)}
+@media(max-width:690px){.options .option{font-size:clamp(22px,6vw,42px)}}

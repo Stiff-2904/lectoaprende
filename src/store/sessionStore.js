@@ -1,9 +1,10 @@
+const modules = require("../data/modules");
 const { randomUUID } = require("node:crypto");
 
 const sessions = new Map();
 
 function newProgress() {
-  return { 1: 0, 2: 0, 3: 0, 4: 0 };
+  return Object.fromEntries(modules.map(module => [module.id, 0]));
 }
 
 function createSession() {
@@ -12,7 +13,7 @@ function createSession() {
     createdAt: new Date().toISOString(),
     progress: newProgress(),
     attempts: [],
-    completed: { 1: [], 2: [], 3: [], 4: [] }
+    completed: Object.fromEntries(modules.map(module => [module.id, []]))
   };
 
   sessions.set(session.id, session);

@@ -2,8 +2,10 @@ const { z } = require("zod");
 const sessionService = require("../services/session.service");
 const HttpError = require("../utils/httpError");
 
+const modules = require("../data/modules");
+
 const attemptSchema = z.object({
-  moduleId: z.coerce.number().int().min(1).max(4),
+  moduleId: z.coerce.number().int().min(1).max(modules.length),
   exerciseId: z.string().min(1),
   answer: z.union([
     z.string().min(1),

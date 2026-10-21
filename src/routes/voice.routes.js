@@ -19,7 +19,9 @@ const ALLOWED_TEXTS = new Set([
     exercise.feedback.incorrect
   ])
 ].map(normalizeText));
-const CACHE_LIMIT = 80;
+// Guardar instrucciones y respuestas de todos los mundos para evitar solicitudes
+// repetidas al servicio de voz en la misma sesión del servidor.
+const CACHE_LIMIT = 320;
 const cache = new Map();
 const requestLog = new Map();
 
@@ -44,8 +46,9 @@ function setCache(key, value) {
 
 function overLimit(ip) {
   const now = Date.now();
-  // Un máximo de 20 solicitudes no almacenadas por minuto y por conexión.
-  // Además, sólo se permiten los textos educativos incluidos en el proyecto.
+  // Máximo de 90 mensajes distintos por minuto y conexión. En una sesión de
+  // aprendizaje es normal oír instrucciones y respuestas de muchos retos seguidos.
+  // Se mantiene una lista estricta de textos permitidos, para evitar abusos.
   if (requestLog.size > 2000) {
     for (const [key, record] of requestLog) {
       if (now - record.since >= 60_000) requestLog.delete(key);
@@ -57,7 +60,7 @@ function overLimit(ip) {
     requestLog.set(ip, record);
   }
   record.count += 1;
-  return record.count > 20;
+  return record.count > 90;
 }
 
 router.get('/status', (req, res) => {

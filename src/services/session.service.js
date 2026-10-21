@@ -44,6 +44,16 @@ function createAnonymousSession() {
 function recordAttempt(sessionId, payload) {
   const session = requireSession(sessionId);
   const exercise = getInternalExercise(payload.moduleId, payload.exerciseId);
+  // Las respuestas deben provenir de las opciones presentadas al estudiante.
+  // Para ordenar sílabas o palabras se acepta exclusivamente una permutación de todas ellas.
+  const answer = normalizeAnswer(payload.answer);
+  const options = exercise.options.map(option => normalizeAnswer(option));
+  const isOrder = ["order-syllables", "order-words"].includes(exercise.type);
+  const valid = isOrder
+    ? Array.isArray(answer) && answer.length === options.length &&
+      [...answer].sort().join("\u0000") === [...options].sort().join("\u0000")
+    : !Array.isArray(answer) && options.includes(answer);
+  if (!valid) throw new HttpError(400, "La respuesta no coincide con las opciones del ejercicio.");
   const correct = isCorrectAnswer(payload.answer, exercise.correctAnswer);
 
   const attempt = {

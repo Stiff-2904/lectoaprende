@@ -30,7 +30,7 @@ function buildProgress(progress, completed = {}) {
       : {
           moduleId: null,
           title: null,
-          message: "¡Excelente! Has completado los cuatro módulos."
+          message: "¡Excelente! Has completado los ocho mundos."
         }
   };
 }

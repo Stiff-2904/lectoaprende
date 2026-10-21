@@ -27,7 +27,7 @@ app.get("/menu", (req, res) => {
     res.sendFile(path.join(__dirname, '../public/views/menu.html'));
 });
 
-app.get(["/module1", "/module2", "/module3", "/module4"], (req, res) => {
+app.get(/^\/module[1-8]$/, (req, res) => {
     res.sendFile(path.join(__dirname, '../public/views/module1.html'));
 });
 

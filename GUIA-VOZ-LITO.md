@@ -37,7 +37,7 @@ La voz **no se incluye como MP3**: se genera cuando se solicita, mediante Azure 
 8. En **Elige la voz de Lito**, seleccione **Lito infantil · Marina** y pulse **Escuchar prueba**.
 9. Abra `http://localhost:3000/` y pruebe **Escuchar a Lito**; en las aventuras pulse **Escuchar de nuevo**.
 
-Si el audio no funciona, verifique la clave, región, disponibilidad del servicio, salida de sonido, conexión a Internet y permisos de reproducción del navegador. Si Azure falla, LectoAprende volverá a usar una voz del navegador.
+Si el audio no funciona, verifique la clave, región, disponibilidad del servicio, salida de sonido, conexión a Internet y permisos de reproducción del navegador. Si Azure falla durante una actividad, LectoAprende mantiene seleccionada la voz Marina y muestra un aviso para volver a intentarlo; **no cambia a otra voz a mitad de un mundo**. Si Azure no está configurado, usa la voz del dispositivo.
 
 ## Cómo funciona
 
@@ -47,9 +47,9 @@ Si el audio no funciona, verifique la clave, región, disponibilidad del servici
 - Se guarda en memoria una caché pequeña de las frases solicitadas para reducir llamadas y latencia. También hay un límite básico por dirección IP.
 - La clave de Azure **solo se usa en el servidor**. El navegador no la recibe.
 - Azure recibe únicamente el texto de la instrucción o felicitación, **no el nombre ni la respuesta del niño**.
-- La voz usa los controles de audio del navegador cuando Azure no está habilitado o falla.
+- Cuando Azure no está habilitado se utiliza la voz del dispositivo, que queda fijada entre mundos. Si Azure está habilitado y falla temporalmente, no se cambia a otra voz sin avisar.
 - La selección de voz se guarda en el navegador de la persona adulta mediante `localStorage`. Para activar Marina por defecto, no se necesita intervenir.
-- Los audios comienzan cuando se pulsa un botón; no se activa reproducción automática al abrir páginas.
+- Lito intenta hablar automáticamente una vez por reto o página; algunos navegadores exigen primero una interacción del usuario. Se puede pulsar el botón para repetir.
 
 ## Nota pedagógica
 
